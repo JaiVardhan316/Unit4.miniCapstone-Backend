@@ -4,9 +4,9 @@ export default app;
 
 import morgan from "morgan";
 import getUserFromToken from "#middleware/getUserFromToken";
-import playlistsRouter from "#api/departments";
-import tracksRouter from "#api/faculty";
-import usersRouter from "#api/admins";
+import departmentsRouter from "#api/departments";
+import facultyRouter from "#api/faculty";
+import adminsRouter from "#api/admins";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
