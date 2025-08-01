@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS faculty;
+DROP TABLE IF EXISTS departments;
+
 CREATE TABLE departments (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
