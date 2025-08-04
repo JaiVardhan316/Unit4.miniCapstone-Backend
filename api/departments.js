@@ -65,3 +65,55 @@ router
     if (!dep) return res.status(404).send("department not found");
     res.send(dep);
   });
+
+// router.post(async (req, res, next) => {
+//   try {
+//     const { departmentId, facultyId } = req.params;
+
+//     const {
+//       rows: [updatedFaculty],
+//     } = await client.query(
+//       `
+//       UPDATE faculty
+//       SET department_id = $1
+//       WHERE id = $2
+//       RETURNING *;
+//     `,
+//       [departmentId, facultyId]
+//     );
+
+//     if (!updatedFaculty) {
+//       return res.status(404).send("Faculty member not found.");
+//     }
+
+//     res.send(updatedFaculty);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.post(async (req, res, next) => {
+//   try {
+//     const { facultyId } = req.params;
+
+//     const {
+//       rows: [updatedFaculty],
+//     } = await client.query(
+//       `
+//       UPDATE faculty
+//       SET department_id = NULL
+//       WHERE id = $1
+//       RETURNING *;
+//     `,
+//       [facultyId]
+//     );
+
+//     if (!updatedFaculty) {
+//       return res.status(404).send("Faculty member not found.");
+//     }
+
+//     res.send(updatedFaculty);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
