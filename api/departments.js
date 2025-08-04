@@ -56,7 +56,7 @@ router
       phone,
       email
     );
-    if (!updatedProf) return res.status(404).send("no Department found");
+    if (!updatedDep) return res.status(404).send("no Department found");
     res.send(updatedDep);
   })
   .delete(async (req, res) => {
