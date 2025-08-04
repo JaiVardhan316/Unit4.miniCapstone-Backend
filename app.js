@@ -17,7 +17,7 @@ app.use(morgan("dev"));
 // app.use(getUserFromToken);
 
 // app.use("/departments", departmentsRouter);
-app.use("/faculty", facultyRouter);
+app.use("/api/faculty", facultyRouter);
 // app.use("/admins", adminsRouter);
 
 app.use((err, req, res, next) => {
