@@ -1,22 +1,24 @@
 import express from "express";
+import cors from "cors";
 const app = express();
 export default app;
 
 import morgan from "morgan";
-import getUserFromToken from "#middleware/getUserFromToken";
-import departmentsRouter from "#api/departments";
+// import getUserFromToken from "#middleware/getUserFromToken";
+// import departmentsRouter from "#api/departments";
 import facultyRouter from "#api/faculty";
-import adminsRouter from "#api/admins";
+// import adminsRouter from "#api/admins";
 
+app.use(cors({ origin: /localhost/ }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-app.use(getUserFromToken);
+// app.use(getUserFromToken);
 
-app.use("/departments", departmentsRouter);
+// app.use("/departments", departmentsRouter);
 app.use("/faculty", facultyRouter);
-app.use("/admins", adminsRouter);
+// app.use("/admins", adminsRouter);
 
 app.use((err, req, res, next) => {
   // A switch statement can be used instead of if statements
