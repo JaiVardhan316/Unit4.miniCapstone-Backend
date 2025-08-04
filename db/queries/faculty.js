@@ -10,15 +10,77 @@ export async function getAllFaculty() {
 
 export async function getSingleProfessorWithDept(id) {
   const sql = `
-    SELECT faculty.*
-    department.name AS department_name
+    SELECT faculty.*,
+    departments.name AS department_name
     FROM
      faculty
-    LEFT JOIN departments ON department_id = faculty.id
-    WHERE id = $1
+    LEFT JOIN departments ON departments.id = faculty.department_id
+    WHERE faculty.id = $1
     `;
   const {
-    rows: [faculty],
+    rows: [professor],
   } = await db.query(sql, [id]);
-  return faculty;
+  return professor;
 }
+
+export async function insertProfessor(name, image, description, deptId) {
+  const sql = `
+    INSERT INTO faculty
+        (name, bioImage, bioDescription, department_id)
+    VALUES
+        ($1, $2, $3, $4)
+    RETURNING *
+    `;
+  const {
+    rows: [professor],
+  } = await db.query(sql, [name, image, description, deptId]);
+  return professor;
+}
+
+export async function removeProfessor(id) {
+  const sql = `
+    DELETE FROM faculty
+    WHERE id = $1
+    RETURNING *
+    `;
+  const {
+    rows: [professor],
+  } = await db.query(sql, [id]);
+  return professor;
+}
+
+export async function updateProfessorById(
+  id,
+  name,
+  email,
+  bioDescription,
+  bioImage
+) {
+  const sql = `
+    UPDATE faculty
+    SET name = $1,
+        email = $2,
+        bioDescription = $3,
+        bioImage = $4
+    WHERE id = $5
+    RETURNING *
+  `;
+  const {
+    rows: [professor],
+  } = await db.query(sql, [id, name, email, bioDescription, bioImage]);
+  return professor;
+}
+
+export async function updateProfessorDepartment(id, newDepartmentId) {
+  const sql = `
+    UPDATE faculty
+    SET department_id = $1
+    WHERE id = $2
+    RETURNING *
+  `;
+  const {
+    rows: [professor],
+  } = await db.query(sql, [newDepartmentId, id]);
+  return professor;
+}
+
