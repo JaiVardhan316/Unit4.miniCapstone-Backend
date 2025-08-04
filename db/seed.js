@@ -14,16 +14,16 @@ async function seed() {
       ('History', 'Department of Historical Studies');
 
     INSERT INTO faculty (name, bioImage, bioDescription, department_id) VALUES
-      ('Beast', 'https://example.com/beast.jpg', 'Dr. Henry McCoy, expert in genetics and mutation.', 1),
-      ('Forge', 'https://example.com/forge.jpg', 'Inventor with a knack for creating high-tech tools.', 1),
+      ('Beast', 'pictures/beast.jpg', 'Dr. Henry McCoy, expert in genetics and mutation.', 1),
+      ('Forge', 'pictures/forge.jpg', 'Inventor with a knack for creating high-tech tools.', 1),
 
-      ('Wolverine', 'https://example.com/wolverine.jpg', 'Logan teaches advanced combat and survival.', 2),
-      ('Colossus', 'https://example.com/colossus.jpg', 'Piotr Rasputin specializes in strength training.', 2),
+      ('Wolverine', 'pictures/wolverine.jpg', 'Logan teaches advanced combat and survival.', 2),
+      ('Colossus', 'pictures/colossus.jpg', 'Piotr Rasputin specializes in strength training.', 2),
 
-      ('Professor X', 'https://example.com/professorx.jpg', 'Founder of Xavier''s School, teaching ethics and leadership.', 3),
-      ('Jean Grey', 'https://example.com/jeangrey.jpg', 'Teaches emotional intelligence and telepathy-related studies.', 3),
+      ('Professor X', 'pictures/professor-x.jpg', 'Founder of Xavier''s School, teaching ethics and leadership.', 3),
+      ('Jean Grey', 'pictures/jean.jpg', 'Teaches emotional intelligence and telepathy-related studies.', 3),
 
-      ('Storm', 'https://example.com/storm.jpg', 'Ororo Munroe lectures on weather patterns and African mythology.', 4),
-      ('Nightcrawler', 'https://example.com/nightcrawler.jpg', 'Teaches religious studies and European history.', 4);
+      ('Storm', 'pictures/storm.jpg', 'Ororo Munroe lectures on weather patterns and African mythology.', 4),
+      ('Nightcrawler', 'pictures/nightcrawler.jpg', 'Teaches religious studies and European history.', 4);
   `);
 }

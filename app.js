@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
+app.use('/pictures', express.static('pictures'));
+
 // app.use(getUserFromToken);
 
 // app.use("/departments", departmentsRouter);
