@@ -37,6 +37,30 @@ export async function createDepartment(
   return department;
 }
 
+export async function updateDepartmentById(
+  id,
+  name,
+  description,
+  images,
+  phone,
+  email
+) {
+  const sql = `
+    UPDATE faculty
+    SET name = $1,
+        description = $2,
+        images = $3,
+        phone = $4
+        email = $5
+    WHERE id = $6
+    RETURNING *
+  `;
+  const {
+    rows: [department],
+  } = await db.query(sql, [name, description, images, phone, email, id]);
+  return department;
+}
+
 export async function deleteDepartment(id) {
   const sql = `
     DELETE FROM departments

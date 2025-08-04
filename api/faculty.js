@@ -13,8 +13,8 @@ import {
 router
   .route("/")
   .get(async (req, res) => {
-    const faculty = await getAllFaculty();
-    res.send(faculty);
+    const departments = await getDepartments();
+    res.send(departments);
   })
   .post(async (req, res) => {
     const { name, email, bioDescription, bioImage, departmentId } = req.body;
