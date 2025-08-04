@@ -1,0 +1,67 @@
+import {
+  createDepartment,
+  deleteDepartment,
+  getDepartmentById,
+} from "#db/queries/departments";
+import express from "express";
+const router = express.Router();
+export default router;
+
+router
+  .route("/")
+  .get(async (req, res) => {
+    const departments = await getDepartments();
+    res.send(departments);
+  })
+  .post(async (req, res) => {
+    const { name, description, images, phone, email } = req.body;
+    if (!name || !description || !images || !phone || !email) {
+      return res.status(400).send("All fields are required");
+    }
+
+    const newDepartment = await createDepartment(
+      name,
+      description,
+      images,
+      phone,
+      email
+    );
+
+    res.status(201).send(newDepartment);
+  });
+
+router
+  .route("/:id")
+  .get(async (req, res) => {
+    const { id } = req.params;
+    const dep = await getDepartmentById(id);
+    if (!dep) return res.status(404).send("Department not found");
+    res.send(dep);
+  })
+  .put(async (req, res) => {
+    const { id } = req.params;
+    const { name, description, images, phone, email } = req.body;
+
+    if (!name || !description || !images || !phone || !email) {
+      return res
+        .status(400)
+        .send("At least one field must be provided to update");
+    }
+
+    const updatedDep = await updateDepartmentById(
+      id,
+      name,
+      description,
+      images,
+      phone,
+      email
+    );
+    if (!updatedDep) return res.status(404).send("no Department found");
+    res.send(updatedDep);
+  })
+  .delete(async (req, res) => {
+    const { id } = req.params;
+    const dep = await deleteDepartment(id);
+    if (!dep) return res.status(404).send("department not found");
+    res.send(dep);
+  });
