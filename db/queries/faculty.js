@@ -84,3 +84,13 @@ export async function updateProfessorDepartment(id, newDepartmentId) {
   return professor;
 }
 
+export async function removeProfessorFromDepartment(professorId) {
+  const sql = `
+    UPDATE faculty
+    SET department_id = NULL
+    WHERE id = $1
+    RETURNING *
+  `;
+  const { rows: [professor] } = await db.query(sql, [professorId]);
+  return professor;
+}
