@@ -3,6 +3,8 @@ import {
   deleteDepartment,
   getDepartmentById,
   updateDepartmentById,
+  addFacultyToDepartment,
+  removeFacultyFromDepartment,
   getDepartments,
   getFacultyForDepartment,
 } from "#db/queries/departments";
@@ -78,54 +80,58 @@ router.get("/:id/faculty", async (req, res) => {
   res.send(faculty);
 });
 
-// router.post(async (req, res, next) => {
-//   try {
-//     const { departmentId, facultyId } = req.params;
+router.post(
+  "/:departmentId/faculty/:facultyId",
+  requireUser,
+  async (req, res) => {
+    try {
+      const { departmentId, facultyId } = req.params;
 
-//     const {
-//       rows: [updatedFaculty],
-//     } = await client.query(
-//       `
-//       UPDATE faculty
-//       SET department_id = $1
-//       WHERE id = $2
-//       RETURNING *;
-//     `,
-//       [departmentId, facultyId]
-//     );
+      const department = await getDepartmentById(departmentId);
+      if (!department) {
+        return res.status(404).send("Department not found");
+      }
 
-//     if (!updatedFaculty) {
-//       return res.status(404).send("Faculty member not found.");
-//     }
+      const updatedFaculty = await addFacultyToDepartment(
+        departmentId,
+        facultyId
+      );
 
-//     res.send(updatedFaculty);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+      if (!updatedFaculty) {
+        return res.status(404).send("Faculty member not found");
+      }
 
-// router.post(async (req, res, next) => {
-//   try {
-//     const { facultyId } = req.params;
+      res.send({
+        message: "Faculty member successfully added to department",
+        faculty: updatedFaculty,
+      });
+    } catch (error) {
+      console.error("Error adding faculty to department:", error);
+      res.status(500).send("Internal server error");
+    }
+  }
+);
 
-//     const {
-//       rows: [updatedFaculty],
-//     } = await client.query(
-//       `
-//       UPDATE faculty
-//       SET department_id = NULL
-//       WHERE id = $1
-//       RETURNING *;
-//     `,
-//       [facultyId]
-//     );
+router.delete(
+  "/:departmentId/faculty/:facultyId",
+  requireUser,
+  async (req, res) => {
+    try {
+      const { facultyId } = req.params;
 
-//     if (!updatedFaculty) {
-//       return res.status(404).send("Faculty member not found.");
-//     }
+      const updatedFaculty = await removeFacultyFromDepartment(facultyId);
 
-//     res.send(updatedFaculty);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+      if (!updatedFaculty) {
+        return res.status(404).send("Faculty member not found");
+      }
+
+      res.send({
+        message: "Faculty member successfully removed from department",
+        faculty: updatedFaculty,
+      });
+    } catch (error) {
+      console.error("Error removing faculty from department:", error);
+      res.status(500).send("Internal server error");
+    }
+  }
+);
