@@ -28,7 +28,7 @@ export async function getSingleProfessorWithDept(id) {
     id: row.id,
     name: row.name,
     bioDescription: row.biodescription,
-    bioImage: row.bioImage,
+    bioImage: row.bioimage, // 🧠 ADD THIS LINE
     department: row.dept_id
       ? {
           id: row.dept_id,
