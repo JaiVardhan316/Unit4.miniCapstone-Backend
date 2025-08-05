@@ -2,6 +2,7 @@ import {
   createDepartment,
   deleteDepartment,
   getDepartmentById,
+  updateDepartmentById,
 } from "#db/queries/departments";
 import express from "express";
 const router = express.Router();
