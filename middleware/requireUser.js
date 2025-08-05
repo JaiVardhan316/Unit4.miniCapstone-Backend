@@ -7,7 +7,7 @@ export default async function requireUser(req, res, next) {
   if (!header) {
     return res.status(401).send("authorization required");
   }
-  const token = header.replace("Bearer", " ").trim();
+  const token = header.replace("Bearer", "").trim();
   try {
     const user = verifyToken(token);
     req.user = user;
@@ -17,4 +17,3 @@ export default async function requireUser(req, res, next) {
     return res.status(401).send("invalid token");
   }
 }
-
