@@ -11,15 +11,32 @@ export async function getAllFaculty() {
 export async function getSingleProfessorWithDept(id) {
   const sql = `
     SELECT faculty.*,
-    departments.name AS department_name
-    FROM
-     faculty
+           departments.id AS dept_id,
+           departments.name AS dept_name
+    FROM faculty
     LEFT JOIN departments ON departments.id = faculty.department_id
     WHERE faculty.id = $1
-    `;
+  `;
+
   const {
-    rows: [professor],
+    rows: [row],
   } = await db.query(sql, [id]);
+
+  if (!row) return null;
+
+  const professor = {
+    id: row.id,
+    name: row.name,
+    bioDescription: row.biodescription,
+    bioImage: row.bioImage,
+    department: row.dept_id
+      ? {
+          id: row.dept_id,
+          name: row.dept_name,
+        }
+      : null,
+  };
+
   return professor;
 }
 
@@ -91,6 +108,8 @@ export async function removeProfessorFromDepartment(professorId) {
     WHERE id = $1
     RETURNING *
   `;
-  const { rows: [professor] } = await db.query(sql, [professorId]);
+  const {
+    rows: [professor],
+  } = await db.query(sql, [professorId]);
   return professor;
 }
