@@ -3,7 +3,8 @@ import {
   deleteDepartment,
   getDepartmentById,
   updateDepartmentById,
-  getDepartments
+  getDepartments,
+  getFacultyForDepartment,
 } from "#db/queries/departments";
 import express from "express";
 import requireUser from "#middleware/requireUser";
@@ -69,6 +70,13 @@ router
     if (!dep) return res.status(404).send("department not found");
     res.send(dep);
   });
+
+router.get("/:id/faculty", async (req, res) => {
+  const { id } = req.params;
+  const faculty = await getFacultyForDepartment(id);
+  if (!faculty) return res.status(404).send("faculty not found");
+  res.send(faculty);
+});
 
 // router.post(async (req, res, next) => {
 //   try {
