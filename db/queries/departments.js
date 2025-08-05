@@ -98,3 +98,14 @@ export async function removeFacultyFromDepartment(facultyId) {
   } = await db.query(sql, [facultyId]);
   return faculty;
 }
+
+
+export async function getFacultyForDepartment(departmentId) {
+  const sql = `
+    SELECT id, name, bioImage, bioDescription
+    FROM faculty
+    WHERE department_id = $1
+  `;
+  const { rows } = await db.query(sql, [departmentId]);
+  return rows;
+}
