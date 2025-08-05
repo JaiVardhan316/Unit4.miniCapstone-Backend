@@ -76,7 +76,6 @@ router
 router.get("/:id/faculty", async (req, res) => {
   const { id } = req.params;
   const faculty = await getFacultyForDepartment(id);
-  if (!faculty) return res.status(404).send("faculty not found");
   res.send(faculty);
 });
 

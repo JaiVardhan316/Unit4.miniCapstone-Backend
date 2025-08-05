@@ -72,11 +72,11 @@ router
 
 router.route("/:id/department").put(requireUser, async (req, res) => {
   const { id } = req.params;
-  const { deptId } = req.body;
+  const { departmentId } = req.body;
 
-  if (!deptId) return res.status(400).send("missing dept ID");
+  if (!departmentId) return res.status(400).send("missing dept ID");
 
-  const updatedProf = await updateProfessorDepartment(id, deptId);
+  const updatedProf = await updateProfessorDepartment(id, departmentId);
 
   if (!updatedProf) {
     return res.status(404).send("Professor not found");
