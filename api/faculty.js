@@ -20,16 +20,15 @@ router
     res.send(departments);
   })
   .post(requireUser, async (req, res) => {
-    const { name, email, bioDescription, bioImage, departmentId } = req.body;
-    if (!name || !email || !bioDescription || !bioImage || !departmentId) {
+    const { name, bioDescription, bioImage, departmentId } = req.body;
+    if (!name || !bioDescription || !bioImage || !departmentId) {
       return res.status(400).send("All fields are required");
     }
 
     const newProfessor = await insertProfessor(
       name,
-      email,
-      bioDescription,
       bioImage,
+      bioDescription,
       departmentId
     );
 
