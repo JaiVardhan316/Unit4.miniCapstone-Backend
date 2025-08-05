@@ -8,6 +8,7 @@ import {
   updateProfessorDepartment,
   insertProfessor,
   removeProfessor,
+  removeProfessorFromDepartment
 } from "#db/queries/faculty";
 
 import requireUser from "#middleware/requireUser";
@@ -83,4 +84,9 @@ router.route("/:id/department").put(requireUser, async (req, res) => {
   }
 
   res.send(updatedProf);
-});
+}).delete(requireUser, async (req, res) => {
+  const {id} = req.params;
+  const updatedProf = await removeProfessorFromDepartment(id);
+  if (!updatedProf) return res.status(404).send("professor not found");
+  res.send(updatedProf);
+})
