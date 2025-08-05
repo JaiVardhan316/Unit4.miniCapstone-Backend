@@ -10,13 +10,16 @@ export async function getDepartments() {
 
 export async function getDepartmentById(id) {
   const deptSql = `SELECT * FROM departments WHERE id = $1`;
-  const { rows: [department] } = await db.query(deptSql, [id]);
+  const {
+    rows: [department],
+  } = await db.query(deptSql, [id]);
   if (!department) return null;
 
   const { rows: faculty } = await db.query(
     `SELECT id, name, bioImage, bioDescription
      FROM faculty
-     WHERE department_id = $1`, [id]
+     WHERE department_id = $1`,
+    [id]
   );
 
   department.faculty = faculty;
@@ -50,11 +53,11 @@ export async function updateDepartmentById(
   email
 ) {
   const sql = `
-    UPDATE faculty
+    UPDATE departments
     SET name = $1,
         description = $2,
         images = $3,
-        phone = $4
+        phone = $4,
         email = $5
     WHERE id = $6
     RETURNING *
