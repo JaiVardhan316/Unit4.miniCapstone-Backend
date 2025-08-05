@@ -103,7 +103,6 @@ export async function removeFacultyFromDepartment(facultyId) {
   return faculty;
 }
 
-
 export async function getFacultyForDepartment(departmentId) {
   const sql = `
     SELECT id, name, bioImage, bioDescription
