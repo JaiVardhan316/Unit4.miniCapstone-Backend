@@ -10,7 +10,7 @@ app.use(cors({
 
 import morgan from "morgan";
 // import getUserFromToken from "#middleware/getUserFromToken";
-// import departmentsRouter from "#api/departments";
+import departmentsRouter from "#api/departments";
 import facultyRouter from "#api/faculty";
 // import adminsRouter from "#api/admins";
 import userRouter from "#api/user";
@@ -25,6 +25,7 @@ app.use("/pictures", express.static("pictures"));
 // app.use(getUserFromToken);
 
 app.use("/api/auth", userRouter);
+app.use("/api/departments", departmentsRouter)
 
 // app.use("/departments", departmentsRouter);
 app.use("/api/faculty", facultyRouter);
