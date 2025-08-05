@@ -3,6 +3,7 @@ import {
   deleteDepartment,
   getDepartmentById,
   updateDepartmentById,
+  getDepartments
 } from "#db/queries/departments";
 import express from "express";
 import requireUser from "#middleware/requireUser";
