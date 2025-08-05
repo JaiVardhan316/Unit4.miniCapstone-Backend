@@ -10,13 +10,15 @@ import {
   removeProfessor,
 } from "#db/queries/faculty";
 
+import requireUser from "#middleware/requireUser";
+
 router
   .route("/")
   .get(async (req, res) => {
-    const departments = await getDepartments();
+    const departments = await getAllFaculty();
     res.send(departments);
   })
-  .post(async (req, res) => {
+  .post(requireUser, async (req, res) => {
     const { name, email, bioDescription, bioImage, departmentId } = req.body;
     if (!name || !email || !bioDescription || !bioImage || !departmentId) {
       return res.status(400).send("All fields are required");
@@ -41,7 +43,7 @@ router
     if (!prof) return res.status(404).send("Professor not found");
     res.send(prof);
   })
-  .put(async (req, res) => {
+  .put(requireUser, async (req, res) => {
     const { id } = req.params;
     const { name, email, bioDescription, bioImage } = req.body;
 
@@ -61,14 +63,14 @@ router
     if (!updatedProf) return res.status(404).send("no Profesor found");
     res.send(updatedProf);
   })
-  .delete(async (req, res) => {
+  .delete(requireUser, async (req, res) => {
     const { id } = req.params;
     const prof = await removeProfessor(id);
     if (!prof) return res.status(404).send("professor not found");
     res.send(prof);
   });
 
-router.route("/:id/department").put(async (req, res) => {
+router.route("/:id/department").put(requireUser, async (req, res) => {
   const { id } = req.params;
   const { deptId } = req.body;
 

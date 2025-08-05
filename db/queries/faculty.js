@@ -67,7 +67,7 @@ export async function updateProfessorById(
   `;
   const {
     rows: [professor],
-  } = await db.query(sql, [id, name, email, bioDescription, bioImage]);
+  } = await db.query(sql, [name, email, bioDescription, bioImage, id]);
   return professor;
 }
 
