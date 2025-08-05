@@ -5,6 +5,8 @@ import {
   updateDepartmentById,
 } from "#db/queries/departments";
 import express from "express";
+import requireUser from "#middleware/requireUser";
+
 const router = express.Router();
 export default router;
 
@@ -14,7 +16,7 @@ router
     const departments = await getDepartments();
     res.send(departments);
   })
-  .post(async (req, res) => {
+  .post(requireUser, async (req, res) => {
     const { name, description, images, phone, email } = req.body;
     if (!name || !description || !images || !phone || !email) {
       return res.status(400).send("All fields are required");
@@ -39,7 +41,7 @@ router
     if (!dep) return res.status(404).send("Department not found");
     res.send(dep);
   })
-  .put(async (req, res) => {
+  .put(requireUser, async (req, res) => {
     const { id } = req.params;
     const { name, description, images, phone, email } = req.body;
 
@@ -60,7 +62,7 @@ router
     if (!updatedDep) return res.status(404).send("no Department found");
     res.send(updatedDep);
   })
-  .delete(async (req, res) => {
+  .delete(requireUser, async (req, res) => {
     const { id } = req.params;
     const dep = await deleteDepartment(id);
     if (!dep) return res.status(404).send("department not found");
