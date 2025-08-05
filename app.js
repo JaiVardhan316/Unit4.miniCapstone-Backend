@@ -14,7 +14,6 @@ import morgan from "morgan";
 import facultyRouter from "#api/faculty";
 // import adminsRouter from "#api/admins";
 import userRouter from "#api/user";
-app.use("/api/auth", userRouter);
 
 
 app.use(express.json());
@@ -24,6 +23,8 @@ app.use(morgan("dev"));
 app.use("/pictures", express.static("pictures"));
 
 // app.use(getUserFromToken);
+
+app.use("/api/auth", userRouter);
 
 // app.use("/departments", departmentsRouter);
 app.use("/api/faculty", facultyRouter);

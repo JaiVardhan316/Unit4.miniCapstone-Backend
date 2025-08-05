@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-export default router;
 import { createUser, getUser } from "#db/queries/users";
 import { createToken } from "#utils/jwt";
 
@@ -20,3 +19,5 @@ router.route("/login").post(async(req, res) => {
     const token = createToken({ id: user.id });
     res.send(token);
 })
+
+export default router;

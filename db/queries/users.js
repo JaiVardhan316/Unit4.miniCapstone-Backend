@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 export async function createUser(username, password) {
   console.log(username, password);
   const sql = `
-    INSERT INTO users
+    INSERT INTO admins
     (username, password)
     VALUES($1, $2)
     RETURNING *
@@ -18,7 +18,7 @@ export async function createUser(username, password) {
 
 export async function getUser(username, password) {
   const sql = `
-  SELECT * FROM users
+  SELECT * FROM admins
   WHERE username = $1
   `;
   const {rows: [user]} = await db.query(sql, [username]);
